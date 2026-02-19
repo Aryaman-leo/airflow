@@ -27,8 +27,9 @@ import {
   usePluginServiceGetPlugins,
 } from "openapi/queries";
 import type { ExternalViewResponse } from "openapi/requests/types.gen";
-import { AirflowPin } from "src/assets/AirflowPin";
 import { DagIcon } from "src/assets/DagIcon";
+// import { AirflowPin } from "src/assets/AirflowPin";
+import { BrandLogo } from "src/components/BrandLogo";
 import { useTimezone } from "src/context/timezone";
 import { getTimezoneOffsetString, getTimezoneTooltipLabel } from "src/utils/datetimeUtils";
 import type { NavItemResponse } from "src/utils/types";
@@ -157,7 +158,7 @@ export const Nav = () => {
       <Flex alignItems="center" flexDir="column" gap={1} width="100%">
         <Box alignItems="center" asChild boxSize={14} display="flex" justifyContent="center">
           <Link title={translate("nav.home")} to="/">
-            <AirflowPin
+            <BrandLogo
               _motionSafe={{
                 _hover: {
                   transform: "rotate(360deg)",

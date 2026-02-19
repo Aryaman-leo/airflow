@@ -18,6 +18,7 @@ from __future__ import annotations
 
 from airflow.api_fastapi.common.types import Theme, UIAlert
 from airflow.api_fastapi.core_api.base import BaseModel
+from typing import  Optional
 
 
 class ConfigResponse(BaseModel):
@@ -36,3 +37,6 @@ class ConfigResponse(BaseModel):
     external_log_name: str | None = None
     theme: Theme | None
     multi_team: bool
+    # added custom logo support 
+    custom_logo: Optional[str] = None
+

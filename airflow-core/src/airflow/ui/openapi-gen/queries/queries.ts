@@ -407,6 +407,7 @@ export const useDagStatsServiceGetDagStats = <TData = Common.DagStatsServiceGetD
 * @returns Config Successful Response
 * @throws ApiError
 */
+
 export const useConfigServiceGetConfig = <TData = Common.ConfigServiceGetConfigDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ accept, section }: {
   accept?: "application/json" | "text/plain" | "*/*";
   section?: string;
