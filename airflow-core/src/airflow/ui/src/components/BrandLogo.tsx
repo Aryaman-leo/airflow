@@ -1,18 +1,34 @@
 import { Box, Image, type BoxProps } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { useConfigServiceGetConfig } from "openapi/queries";
 import { AirflowPin } from "src/assets/AirflowPin";
 
 export const BrandLogo = (props: BoxProps) => {
   const { data } = useConfigServiceGetConfig();
-  const [failed, setFailed] = useState(false);
+  const [isValid, setIsValid] = useState(false);
 
-  const logo = data?.sections
-    ?.find((section) => section.name === "api")
-    ?.options.find((option) => option.key === "custom_logo")?.value as string | undefined;
+  const rawLogo = data
+    ? data.sections
+        .find((section) => section.name === "api")
+        ?.options.find((option) => option.key === "custom_logo")?.value
+    : undefined;
 
-  if (!logo || failed) {
+  const logo = typeof rawLogo === "string" ? rawLogo : Array.isArray(rawLogo) ? rawLogo[0] : undefined;
+
+  useEffect(() => {
+    if (typeof logo !== "string" || logo.trim() === "") {
+      setIsValid(false);
+      return;
+    }
+
+    const img = new window.Image();
+    img.src = logo;
+    img.onload = () => setIsValid(true);
+    img.onerror = () => setIsValid(false);
+  }, [logo]);
+
+  if (!isValid) {
     return (
       <Box {...props}>
         <AirflowPin />
@@ -20,7 +36,5 @@ export const BrandLogo = (props: BoxProps) => {
     );
   }
 
-  return (
-    <Image src={logo} alt="Airflow Logo" objectFit="contain" onError={() => setFailed(true)} {...props} />
-  );
+  return <Image alt="Airflow Logo" objectFit="contain" src={logo} {...props} />;
 };
